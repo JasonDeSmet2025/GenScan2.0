@@ -1,0 +1,147 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++                   Backend                         ++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Vereist:
+- Windows 10/11
+- Remote Desktop/Tailscale
+- Tesseract
+- MS Visual C++ Redistributable
+- poppler
+- Python omgeving
+
+Optioneel:
+- Dropbox
+- OneDrive
+- lokale NAS/server
+- Git
+- SQLiteStudio
+
+0. Zorg voor een Windows 10/11 PC (Mag ook een VM zijn)
+
+1. (Optioneel) Activeer Remote Desktop toegang of installeer Tailscale
+	- Kan nuttig zijn om troubleshooting op afstand mogelijk te maken.
+
+2. Installeer Tesseract
+	- Ga naar:
+		https://github.com/UB-Mannheim/tesseract/wiki
+	- Download en open een recente versie
+	- Stem in met de installatie, klik Ja
+	- Aanvaard de standaard voorgestelde instellingen, behalve bij 'Choose components':
+		- Open 'Additional language data (download)' en vink volgende talen aan:
+			- German
+			- French
+			- Dutch; Flemisch
+	- Test om te zien indien installatie het pad heeft toegevoegd aan de systeem PTAH.
+		- Zie lager hoe te testen
+		- Indien niet OK ga verder met volgende instructie
+	- Na installatie, klik nu op de windows knop en zoek en open naar 'Omgevingsvariabelen van het systeem bewerken'
+	- In de tab 'Geavanceerd' klik op de knop 'Omgevingsvariabelen...'
+	- In het schermdeel 'Systeemvariabelen' klik op 'Path' en dan op de knop 'Bewerken...'
+	- Klik nu op de knop 'Nieuw'
+	- Vul het volgende in en klik daarna op de 'OK' knop:
+		C:\Program Files\Tesseract-OCR
+	- Daarna nog een paar keer op de 'OK' klikken.
+	- Om te testen:
+		- Open een cmd window typ:
+			tesseract --version
+		- Bij correcte installatie krijg je het volgende of gelijkaardig terug:
+			tesseract v5.4.0.20240606
+			 leptonica-1.84.1
+			  libgif 5.2.1 : libjpeg 8d (libjpeg-turbo 3.0.1) : libpng 1.6.43 : libtiff 4.6.0 : zlib 1.3 : libwebp 1.4.0 : libopenjp2 2.5.2
+			 Found AVX2
+			 Found AVX
+			 Found FMA
+			 Found SSE4.1
+			 Found libarchive 3.7.4 zlib/1.3.1 liblzma/5.6.1 bz2lib/1.0.8 liblz4/1.9.4 libzstd/1.5.6
+
+3. Installeer Microsoft Visual C++ Redistributable
+	- Download de laatste MS Visual C++ Redistributable:
+			https://aka.ms/vs/17/release/vc_redist.x64.exe
+	- Start de download voor installatie
+	- Ga akoord en klik 'Install'
+	- Confirmeer met 'Ja'
+	- Klik 'Close' bij 'Setup Successful'
+	- Herstart de PC
+	
+4. Installeer poppler
+	- Download the recentste poppler zip vanaf:
+		https://github.com/oschwartz10612/poppler-windows/releases/
+	- Unzip het gedownloade bestand
+	- Verplaats de uitgepakte folder naar c:\ folder
+	- Klik nu op de windows knop en zoek en open naar 'Omgevingsvariabelen van het systeem bewerken'
+	- In de tab 'Geavanceerd' klik op de knop 'Omgevingsvariabelen...'
+	- In het schermdeel 'Systeemvariabelen' klik op 'Path' en dan op de knop 'Bewerken...'
+	- Klik nu op de knop 'Nieuw'
+	- Vul het volgende in (opletten om juist versie nummers te gebruiken) en klik daarna op de 'OK' knop:
+		C:\poppler-24.08.0\Library\bin\
+	- Daarna nog een paar keer op de 'OK' klikken.
+	- Om te testen:
+		- Open een cmd window typ:
+			pdftoppm -h
+		- Bij foutmelding verifieer dat MS Visual C++ Redistributable geinstalleerd is		
+
+5. Zet Python omgeving op (UV of andere venv)
+	- Installeer UV Python omgeving
+		See https://docs.astral.sh/uv/getting-started/installation/#standalone-installer
+		- In cmd prompt: 
+			powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+		- Reboot PC
+	- Installeer Python lokaal voor uv omgeving
+		- In een cmd prompt:
+			uv python install 3.11
+			(te beginnen met v3.11; recentere versie zijn mogelijk niet compatibel met script)
+		- Ga naar de Documents folder:
+			cd Documents
+		- Inititialiseer een uv project
+			uv init -p 3.11 genscan-backend
+			cd genscan-backend
+						
+6. (Optioneel) Installeer Dropbox
+	- Kan gebruikt worden om de working_folder met anderen te delen
+	
+7. (Optioneel) Installeer Synology Sync
+	- Kan gebruikt worden om de working_folder op een Synology NAS met anderen te delen
+	
+8. (Optioneel) Zet een drive letter op naar een server share
+	- Bruikbaar als working_folder
+
+8. (Optioneel) Installeer SQLite Studio
+	- Download SQLite Studio vanaf:
+		https://sqlitestudio.pl/
+	- Installeer gedownloade bestand
+	- Vertrouw de installatie en installeer met de defaults.
+	- Kan gebruikt worden om in de SQLite database te kijken van Genscan
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++                   Frontend                        ++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1. Nodig
+	- Een web domein ==> vb. genscan.fvbrugge.be, kan ook met intern FQDN of IP adres.
+	- Web hosting met database
+	
+2. Worpress installeren volgens richtlijnen op site:
+    - https://developer.wordpress.org/advanced-administration/before-install/
+	- https://wordpress.org/download/
+	
+3. Wordpress configureren
+	- Ga naar site: vb. https://<site-FQDN>/wp-login
+	- Ga naar 'Plugins' en verwijder:
+		- Akismet Anti-Spam
+		- Hello Dolly
+	- Ga naar 'Weergave' > 'Thema's'
+		- Activeer 'Twenty Twenty-Three'
+			- Indien niet aanwezig kan die gedownload worden vanaf Wordpress site.
+			- Recentere default thema's zijn niet getest voor Genscan.
+		-(Optioneel) Verwijder de andere thema's door één voor één op de thema's te klikken en op de 'Verwijdern' knop te klikken
+	- Ga naar Plugins
+		- Klik op 'Nieuwe plugin toevoegen'
+		- In het veld 'Plugin zoeken' voeg 'WPvivid Backup Plugin' toe
+		- Installeer 'Migration, Backup, Staging – WPvivid Backup & Migration'
+		- Klik op de knop 'Actveren'
+		- Maak een backup door 'Back-up nu' aan te klikken
+		
+4. WORPRESS IS GEINSTALEERD !
+   Vervolg is import van een bestaande GenScan site
