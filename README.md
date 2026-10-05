@@ -14,7 +14,6 @@ Automatische verwerking van overlijdensberichten (rouwbrieven, bidprentjes, over
 - [Technische werking (huidige situatie)](#technische-werking-huidige-situatie)
 - [Wensen en vereisten](#wensen-en-vereisten)
 - [Open vragen](#open-vragen)
-- [Roadmap](#roadmap)
 
 ---
 
