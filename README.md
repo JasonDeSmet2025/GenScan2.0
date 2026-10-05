@@ -117,3 +117,4 @@ Het bestand wordt geïmporteerd in plaats van rechtstreeks in de database geschr
 
 - Welke gratis, lokaal draaiende AI-modellen halen de beste resultaten op deze documenten (ook bij lichtgrijze tekst en handschrift)?
 - Hoe wordt de onzekerheid van het systeem uitgedrukt en teruggekoppeld (bv. score of vlag
+
