@@ -1,0 +1,80 @@
+{
+  "site": {
+    "title": "GenScan — Overlijdensberichten",
+    "tagline": "Digitale archivering van overlijdensberichten voor Familiekunde Vlaanderen Brugge",
+    "language": "nl_NL",
+    "timezone": "Europe/Brussels",
+    "date_format": "d/m/Y",
+    "time_format": "H:i",
+    "start_of_week": 1,
+    "posts_per_page": 10
+  },
+
+  "permalinks": {
+    "structure": "/%postname%/"
+  },
+
+  "theme": "twentytwentythree",
+  "themes_to_remove": [],
+
+  "theme_mods": {
+    "site_tagline": "Digitale archivering van overlijdensberichten"
+  },
+
+  "plugins": [
+    { "slug": "wpvivid", "name": "WPvivid Backup & Migration", "activate": true },
+    { "slug": "wordpress-seo", "name": "Yoast SEO", "activate": true }
+  ],
+  "plugins_to_remove": ["akismet", "hello-dolly"],
+
+  "users": [
+    {
+      "username": "redactie",
+      "email": "redactie@fvbrugge.be",
+      "role": "editor",
+      "first_name": "GenScan",
+      "last_name": "Redactie"
+    }
+  ],
+
+  "pages": [
+    {
+      "title": "Home",
+      "slug": "home",
+      "status": "publish",
+      "content": "Welkom op de GenScan-archiefsite. Hier vindt u gedigitaliseerde overlijdensberichten, ingelezen en georganiseerd voor het familiegeslachtsonderzoek."
+    },
+    {
+      "title": "Over ons",
+      "slug": "over-ons",
+      "status": "publish",
+      "content": "Familiekunde Vlaanderen Brugge is een vereniging die zich bezighoudt met het bewaren en doorzoeken van lokale archiefstukken, onder meer overlijdensberichten uit kranten."
+    },
+    {
+      "title": "Zoeken in het archief",
+      "slug": "zoeken",
+      "status": "publish",
+      "content": "Gebruik de zoekfunctie om te zoeken op naam, plaats of datum. Elk bericht is gekoppeld aan de oorspronkelijke scan."
+    },
+    {
+      "title": "Contact",
+      "slug": "contact",
+      "status": "publish",
+      "content": "Vragen of correcties? Neem contact op via het formulier of per e-mail."
+    }
+  ],
+
+  "posts": [],
+
+  "menus": [
+    {
+      "name": "Hoofdnavigatie",
+      "location": "primary",
+      "items": ["home", "over-ons", "zoeken", "contact"]
+    }
+  ],
+
+  "import": {
+    "xml_files": []
+  }
+}

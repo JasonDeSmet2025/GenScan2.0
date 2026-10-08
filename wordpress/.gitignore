@@ -1,0 +1,5 @@
+# Lokale configuratie (wachtwoorden) nooit naar git
+.env
+
+# Eventuele tijdelijke importbestanden
+*.xml.tmp

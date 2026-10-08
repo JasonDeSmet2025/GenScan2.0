@@ -13,6 +13,7 @@ Automatische verwerking van overlijdensberichten (rouwbrieven, bidprentjes, over
 - [Te extraheren gegevens](#te-extraheren-gegevens)
 - [Technische werking (huidige situatie)](#technische-werking-huidige-situatie)
 - [Wensen en vereisten](#wensen-en-vereisten)
+- [Automatische WordPress-setup (frontend)](#automatische-wordpress-setup-frontend)
 - [Open vragen](#open-vragen)
 
 ---
@@ -111,6 +112,17 @@ Het bestand wordt geïmporteerd in plaats van rechtstreeks in de database geschr
 
 - **Octopus** hoeft niet aangepast te worden. De flow *naar* Octopus wel.
 - De AI wordt pas geïmplementeerd **wanneer alles is ingescand**.
+
+## Automatische WordPress-setup (frontend)
+
+De frontend (WordPress) kan automatisch lokaal opgezet worden via Docker:
+zie de map [`wordpress/`](./wordpress/). Met één commando
+(`py setup_wordpress.py`) wordt een volledige, gestructureerde WordPress-site
+opgezet (MySQL + WordPress + phpMyAdmin), gestuurd door het
+ontwerpbestand [`wordpress/site.json`](./wordpress/site.json).
+
+- Uitleg, stappen en complete veldreferentie: [`wordpress/README.md`](./wordpress/README.md)
+- Handmatige installatie op een webhost blijft beschreven in [`Installatie.txt`](./Installatie.txt)
 
 ## Open vragen
 

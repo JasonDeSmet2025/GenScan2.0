@@ -118,6 +118,22 @@ Optioneel:
 ++                   Frontend                        ++
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+AUTOMATISCH (aanbevolen) — lokaal op deze pc via Docker:
+	Zie de map "wordpress\" in dit project.
+	Eén commando zet een volledige, gestructureerde WordPress-site
+	lokaal op (MySQL + WordPress + phpMyAdmin), gestuurd door het
+	ontwerpbestand "wordpress\site.json".
+
+		cd wordpress
+		py setup_wordpress.py
+
+	Daarna in de browser openen:  http://localhost:8080
+	Alles (naam, taal, thema, plugins, gebruikers, pagina's, menu's)
+	wordt aangestuurd vanuit wordpress\site.json.
+	Uitleg + veldreferentie:  wordpress\README.md
+
+HANDMATIG (alternatief) — op een webhost:
+
 1. Nodig
 	- Een web domein ==> vb. genscan.fvbrugge.be, kan ook met intern FQDN of IP adres.
 	- Web hosting met database

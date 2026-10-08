@@ -1,0 +1,87 @@
+# =====================================================================
+#  GenScan2.0 — Lokale WordPress-stack (frontend) via Docker Compose
+#
+#  Diensten:
+#    db          -> MySQL 8.0  (database)
+#    wordpress   -> Apache + WordPress  (de site zelf, op http://localhost:8080)
+#    phpmyadmin  -> web-UI voor de database  (http://localhost:8081)
+#
+#  wp-cli wordt NIET als eigen dienst gestart; het wordt per opdracht
+#  aangeroepen door setup_wordpress.py via:  docker run wordpress:cli
+#  (gebruikt dezelfde netwerk + volume als hieronder, zie NET/WP_VOL).
+#
+#  Alle waarden komen uit .env  (zie .env.example).
+#
+#  Snel starten :  docker compose up -d
+#  Volledige opzet (aanbevolen):  py setup_wordpress.py
+# =====================================================================
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: genstack_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - genstack
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  wordpress:
+    image: wordpress:latest
+    container_name: genstack_wp
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - "${WP_HTTP_PORT:-8080}:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WP_TABLE_PREFIX:-wp_}
+      # Extra definities in wp-config.php (bestanden uitsluitend via Docker aanpassen)
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'DISALLOW_FILE_EDIT', true );
+        define( 'WP_MEMORY_LIMIT', '256M' );
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - genstack
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: genstack_pma
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "${PMA_PORT:-8081}:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_ROOT_PASSWORD}
+    networks:
+      - genstack
+
+networks:
+  genstack:
+    name: genstack_net
+
+volumes:
+  db_data:
+    name: genstack_db_data
+  wp_data:
+    name: genstack_wp_data
